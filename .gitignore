@@ -1,2 +1,7 @@
 time_tracking_dashboard.code-workspace
 .vscode/
+
+venv
+*.pyc
+.DS_Store
+.env
