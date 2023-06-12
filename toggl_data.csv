@@ -1,0 +1,7 @@
+start_time,end_time,duration,category,group,day_of_week,hour_of_day,is_work
+2023-06-10 09:00:00,2023-06-10 10:30:00,90,Programming,Work,Monday,9,True
+2023-06-10 10:30:00,2023-06-10 11:00:00,30,Break,Personal,Monday,10,False
+2023-06-10 11:00:00,2023-06-10 12:30:00,90,Programming,Work,Monday,11,True
+2023-06-11 09:00:00,2023-06-11 10:00:00,60,Programming,Work,Tuesday,9,True
+2023-06-11 10:00:00,2023-06-11 10:30:00,30,Break,Personal,Tuesday,10,False
+2023-06-11 10:30:00,2023-06-11 11:30:00,60,Programming,Work,Tuesday,10,True

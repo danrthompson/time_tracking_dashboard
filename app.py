@@ -1,28 +1,52 @@
-# Demo code from plotly docs
+import pandas as pd
+import plotly.graph_objs as go
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
 
-from dash import Dash, dcc, html, Input, Output
-import os
+# Load data from CSV
+df = pd.read_csv("toggl_data.csv")
 
+# Calculate total duration per category
+category_durations = df.groupby("category")["duration"].sum()
 
-external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
-
-app = Dash(__name__, external_stylesheets=external_stylesheets)
-
-server = app.server
-
-app.layout = html.Div(
-    [
-        html.H1("Hello World"),
-        dcc.Dropdown(["LA", "NYC", "MTL"], "LA", id="dropdown"),
-        html.Div(id="display-value"),
-    ]
+# Create a bar plot for total duration per category
+category_bar = go.Bar(
+    x=category_durations.index,
+    y=category_durations.values,
+    name="Total duration per category",
 )
 
+# Calculate total duration per day of the week
+day_durations = df.groupby("day_of_week")["duration"].sum()
 
-@app.callback(Output("display-value", "children"), [Input("dropdown", "value")])
-def display_value(value):
-    return f"You have selected {value}"
+# Create a line plot for total duration per day of the week
+day_line = go.Line(
+    x=day_durations.index, y=day_durations.values, name="Total duration per day of week"
+)
 
+# Create a Dash app
+app = dash.Dash(__name__)
+
+app.layout = html.Div(
+    children=[
+        html.H1(children="Time tracking dashboard"),
+        dcc.Graph(
+            id="category-graph",
+            figure={
+                "data": [category_bar],
+                "layout": go.Layout(title="Total duration per category"),
+            },
+        ),
+        dcc.Graph(
+            id="day-graph",
+            figure={
+                "data": [day_line],
+                "layout": go.Layout(title="Total duration per day of week"),
+            },
+        ),
+    ]
+)
 
 if __name__ == "__main__":
     app.run_server(debug=True)
